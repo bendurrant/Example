@@ -15,8 +15,6 @@ def InstallerExercise(inputArray):
     
 def createGraph(inputArray):
     dag= {}
+    tempStringHolder = []
     for i in inputArray:
-        break
-    
-        
-    
+        return False
