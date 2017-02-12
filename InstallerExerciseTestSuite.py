@@ -1,36 +1,69 @@
 import unittest
+from InstallerExercise import createGraph
 from InstallerExercise import InstallerExercise
 from InstallerExercise import Node
 
 class InstallerExerciseTestMethods(unittest.TestCase):
     maxDiff = None
     def testExpectedStringParse(self):
-        testArray = ["French Fries: Potatos","Bacon: "]
+        testArray = ["French Fries: Potatos","Pigs: ","Potatos: ","Bacon: Pigs"]
         testArrayASGraph= {};
-        testArrayASGraph["French Fries"] = Node("French Fries", "Potatos")
-        testArrayASGraph["Bacon"] = Node("Bacon",None)
-        self.assertDictEqual(testArrayASGraph, InstallerExercise(testArray))
+        testArrayASGraph["French Fries"] = Node("French Fries")
+        testArrayASGraph["Pigs"] = Node("Pigs")
+        testArrayASGraph["Bacon"] = Node("Bacon")
+        testArrayASGraph["Potatos"] = Node("Potatos")
+
+
+        testArrayASGraph["Pigs"].addNewChildPackage("Bacon")
+        testArrayASGraph["Potatos"].addNewChildPackage("French Fries")
+        #print(testArrayASGraph["Pigs"].childPackages)
+        self.assertDictEqual(testArrayASGraph, createGraph(testArray))
         
     def testSingleElementInGraph(self):
         testArray = ["Bacon: Pigs"]
         testArrayASGraph= {};
-        testArrayASGraph["Bacon"] = Node("Bacon","Pigs")
-        self.assertDictEqual(testArrayASGraph, InstallerExercise(testArray))
+        testArrayASGraph["Bacon"] = Node("Bacon")
+        testArrayASGraph["Pigs"] = Node("Pigs")
+
+        testArrayASGraph["Pigs"].addNewChildPackage("Bacon")
+        
+        self.assertDictEqual(testArrayASGraph, createGraph(testArray))
        
     def testLargeNumOfElementInGraph(self):
-        testArray = ["French Fries: Potatos","Bacon: Pigs","KittenService: ",
+        testArray = ["French Fries: Potatos","Potatos: ","Pigs: ","Bacon: Pigs","KittenService: ",
                      "Leetmeme: Cyberportal","Cyberportal: Ice","CamelCaser: KittenService",
                      "Fraudstream: Leetmeme","Ice: "]
+
+        #set up initial nodes
         testArrayASGraph= {}
-        testArrayASGraph["French Fries"] = Node("French Fries", "Potatos")
-        testArrayASGraph["Bacon"] = Node("Bacon","Pigs")
-        testArrayASGraph["KittenService"] = Node("KittenService",None)
-        testArrayASGraph["Leetmeme"] = Node("Leetmeme","Cyberportal")
-        testArrayASGraph["Cyberportal"] = Node("Cyberportal","Ice")
-        testArrayASGraph["CamelCaser"] = Node("CamelCaser","KittenService")
-        testArrayASGraph["Fraudstream"] = Node("Fraudstream","Leetmeme")
-        testArrayASGraph["Ice"] = Node("Ice",None)
-        self.assertDictEqual(testArrayASGraph, InstallerExercise(testArray))
+        testArrayASGraph["French Fries"] = Node("French Fries")
+        testArrayASGraph["Potatos"] = Node("Potatos")
+        testArrayASGraph["Pigs"] = Node("Pigs")
+        testArrayASGraph["Bacon"] = Node("Bacon")
+        testArrayASGraph["KittenService"] = Node("KittenService")
+        testArrayASGraph["Leetmeme"] = Node("Leetmeme")
+        testArrayASGraph["Cyberportal"] = Node("Cyberportal")
+        testArrayASGraph["CamelCaser"] = Node("CamelCaser")
+        testArrayASGraph["Fraudstream"] = Node("Fraudstream")
+        testArrayASGraph["Ice"] = Node("Ice")
+
+        #put in dependencies
+        testArrayASGraph["Potatos"].addNewChildPackage("French Fries")
+        testArrayASGraph["Pigs"].addNewChildPackage("Bacon")
+        testArrayASGraph["Cyberportal"].addNewChildPackage("Leetmeme")
+        testArrayASGraph["Ice"].addNewChildPackage("Cyberportal")
+        testArrayASGraph["KittenService"].addNewChildPackage("CamelCaser")
+        testArrayASGraph["Leetmeme"].addNewChildPackage("Fraudstream")
+
+
+        
+        self.assertDictEqual(testArrayASGraph, createGraph(testArray))
+    
+    """def testDfsPreTimes(self):
+
+    def testDfsPostTimes(self):
+
+    def testDfsFindsCycle(self):"""
 
 if __name__=='__main__':
     unittest.main()
