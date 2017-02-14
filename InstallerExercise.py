@@ -21,11 +21,19 @@ class Node(object):
                 and sorted(self.childPackages) == sorted(another.childPackages))
     def __hash__(self):
         return hash(self.package)
+    def __str__(self):
+        return self.package
+    def __repr__(self):
+        return self.package
     
 def InstallerExercise(inputArray):
     graph = createGraph(inputArray)
-    dfs(graph)
-
+    topSortOutput = []
+    dfs(graph,topSortOutput)
+    topSortOutput.reverse()
+    outputString = ", ".join(topSortOutput)
+    print(outputString)
+    return outputString
     
 def createGraph(inputArray):
     graph= {}
@@ -42,7 +50,30 @@ def createGraph(inputArray):
         if(package not in graph):
             node = Node(package)
             graph[package] = node
-
+            
     return graph
 
-def dfs():
+def dfs(graph, topSort):
+    clock = 1
+    for package in graph:
+        graph[package].visited = False
+    for package in graph:
+        if not graph[package].visited:           
+            clock = explore(graph,package,clock,topSort)
+
+
+def explore(graph, package,clock,topSort):
+    graph[package].visited = True
+    graph[package].preTime = clock
+    clock+=1
+    for child in graph[package].childPackages:
+        #this if statement finds the circular dependency.
+        if (graph[child].preTime >0 and graph[child].postTime <1):
+            raise(ValueError("Circular Dependency found"))
+        if not (graph[child].visited):
+            clock = explore(graph,child,clock,topSort)
+    graph[package].postTime = clock
+    clock +=1
+    topSort.append(package)
+    return clock
+    

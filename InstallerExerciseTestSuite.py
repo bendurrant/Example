@@ -63,17 +63,19 @@ class InstallerExerciseTestMethods(unittest.TestCase):
 
     def testDfsFindsCycle(self):
         with self.assertRaises(ValueError):
-            InstallerExercise(["Leetmeme: Cyberportal","Cyberportal: Ice","Ice: Leetme"])
+            InstallerExercise(["Leetmeme: Cyberportal","Cyberportal: Ice","Ice: Leetmeme"])
     def testExpectedOutput(self):
         testArray = ["KittenService: ","Leetmeme: Cyberportal","Cyberportal: Ice",
                            "CamelCaser: KittenService","Fraudstream: Leetmeme","Ice: "]
 
-        self.assertEquals("KittenService, Ice, Cyberportal, Leetmeme, CamelCaser, Fraudstream",
+        self.assertEqual("Ice, Cyberportal, Leetmeme, Fraudstream, KittenService, CamelCaser",
                           InstallerExercise(testArray))
 
     def testNoDependency(self):
         testArray = ["Potato: ", "Bacon: ", "Broccoli: "]
-        self.assertEquals("Potato, Bacon, Broccoli", InstallerExercise(testArray))
+        self.assertEqual("Broccoli, Bacon, Potato", InstallerExercise(testArray))
+
+    
         
 
 if __name__=='__main__':
