@@ -1,4 +1,4 @@
-# PluralSight challenge
+# challenge
 #author Ben Durrant
 #2/10/17
 
