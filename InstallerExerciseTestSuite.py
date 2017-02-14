@@ -15,9 +15,8 @@ class InstallerExerciseTestMethods(unittest.TestCase):
         testArrayASGraph["Potatos"] = Node("Potatos")
 
 
-        testArrayASGraph["Pigs"].addNewChildPackage("Bacon")
-        testArrayASGraph["Potatos"].addNewChildPackage("French Fries")
-        #print(testArrayASGraph["Pigs"].childPackages)
+        testArrayASGraph["Bacon"].addDependency("Pigs")
+        testArrayASGraph["French Fries"].addDependency("Potatos")
         self.assertDictEqual(testArrayASGraph, createGraph(testArray))
         
     def testSingleElementInGraph(self):
@@ -26,7 +25,7 @@ class InstallerExerciseTestMethods(unittest.TestCase):
         testArrayASGraph["Bacon"] = Node("Bacon")
         testArrayASGraph["Pigs"] = Node("Pigs")
 
-        testArrayASGraph["Pigs"].addNewChildPackage("Bacon")
+        testArrayASGraph["Bacon"].addDependency("Pigs")
         
         self.assertDictEqual(testArrayASGraph, createGraph(testArray))
        
@@ -49,12 +48,13 @@ class InstallerExerciseTestMethods(unittest.TestCase):
         testArrayASGraph["Ice"] = Node("Ice")
 
         #put in dependencies
-        testArrayASGraph["Potatos"].addNewChildPackage("French Fries")
-        testArrayASGraph["Pigs"].addNewChildPackage("Bacon")
-        testArrayASGraph["Cyberportal"].addNewChildPackage("Leetmeme")
-        testArrayASGraph["Ice"].addNewChildPackage("Cyberportal")
-        testArrayASGraph["KittenService"].addNewChildPackage("CamelCaser")
-        testArrayASGraph["Leetmeme"].addNewChildPackage("Fraudstream")
+        testArrayASGraph["Bacon"].addDependency("Pigs")
+        testArrayASGraph["French Fries"].addDependency("Potatos")
+        
+        testArrayASGraph["Leetmeme"].addDependency("Cyberportal")
+        testArrayASGraph["Cyberportal"].addDependency("Ice")
+        testArrayASGraph["CamelCaser"].addDependency("KittenService")
+        testArrayASGraph["Fraudstream"].addDependency("Leetmeme")
 
 
         
@@ -68,12 +68,12 @@ class InstallerExerciseTestMethods(unittest.TestCase):
         testArray = ["KittenService: ","Leetmeme: Cyberportal","Cyberportal: Ice",
                            "CamelCaser: KittenService","Fraudstream: Leetmeme","Ice: "]
 
-        self.assertEqual("Ice, Cyberportal, Leetmeme, Fraudstream, KittenService, CamelCaser",
+        self.assertEqual("KittenService, Ice, Cyberportal, Leetmeme, CamelCaser, Fraudstream",
                           InstallerExercise(testArray))
 
     def testNoDependency(self):
         testArray = ["Potato: ", "Bacon: ", "Broccoli: "]
-        self.assertEqual("Broccoli, Bacon, Potato", InstallerExercise(testArray))
+        self.assertEqual("Potato, Bacon, Broccoli", InstallerExercise(testArray))
 
     
         
