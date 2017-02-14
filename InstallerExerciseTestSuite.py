@@ -2,6 +2,7 @@ import unittest
 from InstallerExercise import createGraph
 from InstallerExercise import InstallerExercise
 from InstallerExercise import Node
+from InstallerExercise import dfs
 
 class InstallerExerciseTestMethods(unittest.TestCase):
     maxDiff = None
@@ -58,12 +59,22 @@ class InstallerExerciseTestMethods(unittest.TestCase):
 
         
         self.assertDictEqual(testArrayASGraph, createGraph(testArray))
-    
-    """def testDfsPreTimes(self):
 
-    def testDfsPostTimes(self):
 
-    def testDfsFindsCycle(self):"""
+    def testDfsFindsCycle(self):
+        with self.assertRaises(ValueError):
+            InstallerExercise(["Leetmeme: Cyberportal","Cyberportal: Ice","Ice: Leetme"])
+    def testExpectedOutput(self):
+        testArray = ["KittenService: ","Leetmeme: Cyberportal","Cyberportal: Ice",
+                           "CamelCaser: KittenService","Fraudstream: Leetmeme","Ice: "]
+
+        self.assertEquals("KittenService, Ice, Cyberportal, Leetmeme, CamelCaser, Fraudstream",
+                          InstallerExercise(testArray))
+
+    def testNoDependency(self):
+        testArray = ["Potato: ", "Bacon: ", "Broccoli: "]
+        self.assertEquals("Potato, Bacon, Broccoli", InstallerExercise(testArray))
+        
 
 if __name__=='__main__':
     unittest.main()

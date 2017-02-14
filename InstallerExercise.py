@@ -24,8 +24,8 @@ class Node(object):
     
 def InstallerExercise(inputArray):
     graph = createGraph(inputArray)
+    dfs(graph)
 
-    return graph
     
 def createGraph(inputArray):
     graph= {}
@@ -43,10 +43,6 @@ def createGraph(inputArray):
             node = Node(package)
             graph[package] = node
 
-    for i in graph.keys():
-        print(i)
-        print(graph[i].childPackages)
-        print("\n\n")
     return graph
 
-#def dfs
+def dfs():
