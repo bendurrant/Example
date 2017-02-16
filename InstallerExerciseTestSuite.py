@@ -20,7 +20,7 @@ class InstallerExerciseTestMethods(unittest.TestCase):
         self.assertDictEqual(testArrayASGraph, createGraph(testArray))
         
     def testSingleElementInGraph(self):
-        testArray = ["Bacon: Pigs"]
+        testArray = ["Bacon: Pigs", "Pigs: "]
         testArrayASGraph= {};
         testArrayASGraph["Bacon"] = Node("Bacon")
         testArrayASGraph["Pigs"] = Node("Pigs")
